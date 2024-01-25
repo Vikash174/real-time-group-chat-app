@@ -1,5 +1,13 @@
+import Body from "./components/Body";
+import Header from "./components/Header";
+
 function App() {
-  return <h1>Slack 0 🚀</h1>;
+  return (
+    <div>
+      <Header />
+      <Body />
+    </div>
+  );
 }
 
 export default App;
