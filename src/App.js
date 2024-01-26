@@ -1,13 +1,7 @@
-import Body from "./components/Body";
-import Header from "./components/Header";
+// import Header from "./components/Header";
 
 function App() {
-  return (
-    <div>
-      <Header />
-      <Body />
-    </div>
-  );
+  return <div className="overflow-hidden">{/* <Header /> */}</div>;
 }
 
 export default App;

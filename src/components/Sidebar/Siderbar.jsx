@@ -11,9 +11,17 @@ import { FaRegBookmark, FaCaretDown, FaEdit } from "react-icons/fa";
 import { IoPeopleSharp } from "react-icons/io5";
 import { IoApps } from "react-icons/io5";
 import { HiOutlineHashtag } from "react-icons/hi";
+import { IoMdAddCircle } from "react-icons/io";
 
-import db from "../firebase-config";
-import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
+import db from "../../firebase-config";
+import {
+  addDoc,
+  collection,
+  getDocs,
+  onSnapshot,
+  query,
+} from "firebase/firestore";
+import { Link, useNavigate } from "react-router-dom";
 
 const Siderbar = () => {
   const [channels, setChannels] = useState([]);
@@ -21,7 +29,12 @@ const Siderbar = () => {
   useEffect(() => {
     const q = query(collection(db, "rooms"));
     const unsub = onSnapshot(q, (querySnapshot) => {
-      setChannels(querySnapshot.docs.map((doc) => doc.data().name));
+      setChannels(
+        querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          name: doc.data().name,
+        }))
+      );
     });
 
     return () => {
@@ -64,16 +77,48 @@ const Siderbar = () => {
       <SidebarOption icon={<FaCaretDown />} optionName={"Channels"} />
 
       {channels.map((channel) => (
-        <SidebarOption icon={<HiOutlineHashtag />} optionName={channel} />
+        <SidebarOption
+          key={channel.id}
+          icon={<HiOutlineHashtag />}
+          optionName={channel.name}
+          id={channel.id}
+        />
       ))}
+
+      <SidebarOption
+        icon={<IoMdAddCircle />}
+        optionName={"Add channels"}
+        addChannelOption={true}
+      />
+
       <hr />
     </div>
   );
 };
 
-const SidebarOption = ({ icon, optionName }) => {
+const SidebarOption = ({ icon, optionName, id, addChannelOption }) => {
+  const navigate = useNavigate();
+
+  const selectChannel = () => {
+    if (id) {
+      navigate(`room/${id}`);
+    } else {
+      navigate("/" + optionName);
+    }
+  };
+
+  const addChannel = () => {
+    const channelName = prompt("Please enter the channel name");
+    if (channelName) {
+      addDoc(collection(db, "rooms"), { name: channelName });
+    }
+  };
+
   return (
-    <div className="p-1 flex items-center">
+    <div
+      className="p-1 flex items-center cursor-pointer hover:bg-gray-800 "
+      onClick={addChannelOption ? addChannel : selectChannel}
+    >
       <div className="mx-3">{icon}</div>
       <span>{optionName}</span>
     </div>
