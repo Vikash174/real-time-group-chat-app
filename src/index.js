@@ -11,11 +11,12 @@ import {
 } from "react-router-dom";
 import Layout from "./Layout";
 import ChatWindow from "./components/ChatWindow/ChatWindow";
+import WelcomeScreen from "./components/ChatWindow/WelcomeScreen";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
-      <Route path="room/:roomId" element={<ChatWindow />}></Route>
+      <Route path="room/:roomId" element={<ChatWindow />} />
     </Route>
   )
 );

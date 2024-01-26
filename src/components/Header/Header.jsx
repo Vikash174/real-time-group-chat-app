@@ -8,16 +8,16 @@ import { CiUser } from "react-icons/ci";
 
 const Header = () => {
   return (
-    <div className="grid grid-cols-4 border border-gray-500 bg-black p-2 ">
+    <div className="grid grid-cols-4 border-b  bg-gray-950 p-3 ">
       <div className=" justify-self-center inline-block col-span-3">
         <MdOutlineWatchLater className="text-white text-xl inline-block mx-2" />
         <form className="inline-block">
           <div className="flex items-center">
             <input
               placeholder="Search..."
-              className="bg-gray-500 p-1 rounded-sm w-80 "
+              className="bg-gray-700 p-1 px-5 rounded-sm w-96 text-white"
             />
-            <div className="-ml-10">
+            <div className="-ml-12">
               <LiaFilterSolid className="text-gray-400 text-xl" />
             </div>
             <div className=" text-gray-400 text-xl">
