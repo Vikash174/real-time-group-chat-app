@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaCaretDown, FaEdit } from "react-icons/fa";
 import { HiOutlineHashtag } from "react-icons/hi";
 import { IoMdAddCircle } from "react-icons/io";
@@ -15,8 +15,14 @@ const Siderbar = () => {
   // Calling custom hook to get data from firestore
   const channels = useFetchDataFromFirestore();
 
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleButtonClick = () => {
+    setIsClicked(!isClicked);
+  };
+
   return (
-    <div className="bg-gray-800 w-[260px] text-white p-2 h-screen ">
+    <div className="bg-gray-800 w-[16%] text-white  h-screen ">
       {/* USER DETAILS  */}
       <div className="flex justify-between  p-2 border-b ">
         <span>Vikash Rai</span>
@@ -34,19 +40,20 @@ const Siderbar = () => {
       <div className="border-b">
         <SidebarOption icon={<FaCaretDown />} optionName={"Channels"} />
 
-        {channels.map(
-          (
-            channel // Maping channels
-          ) => (
-            <SidebarOption
-              key={channel.id}
-              icon={<HiOutlineHashtag />}
-              optionName={channel.name}
-              id={channel.id}
-            />
-          )
-        )}
-
+        <div className="max-h-80 overflow-y-scroll no-scrollbar">
+          {channels.map(
+            (
+              channel // Maping channels
+            ) => (
+              <SidebarOption
+                key={channel.id}
+                icon={<HiOutlineHashtag />}
+                optionName={channel.name}
+                id={channel.id}
+              />
+            )
+          )}
+        </div>
         <SidebarOption
           icon={<IoMdAddCircle />}
           optionName={"Add channels"}
@@ -54,11 +61,24 @@ const Siderbar = () => {
         />
       </div>
 
-      <div className="flex justify-between border rounded-tl-md  absolute bottom-0 w-[20%] p-2 rounded-tr-md ">
+      <div className="flex justify-between border-t w-[260px] rounded-tl-md p-2 rounded-tr-md absolute bottom-0">
         <span>general ^</span>
-        <div className="w-14 h-6 border rounded-l-full rounded-r-full flex items-center justify-between ">
-          <div className="w-4 h-4 mx-1 bg-white rounded-full "></div>
-          <div className="mx-1">
+        <div
+          className={`w-12 h-6 border rounded-full flex items-center cursor-pointer transition-all duration-300 ease-in-out ${
+            isClicked ? "bg-blue-500" : ""
+          }`}
+          onClick={handleButtonClick}
+        >
+          <div
+            className={`w-4 h-4 mx-1 bg-white rounded-full transition-transform ${
+              isClicked ? "transform translate-x-5 w-6 h-6" : ""
+            }`}
+          ></div>
+          <div
+            className={`mx-1 ${
+              isClicked ? "absolute  z-40 text-black left-[230px]" : ""
+            }`}
+          >
             <FiHeadphones />
           </div>
         </div>

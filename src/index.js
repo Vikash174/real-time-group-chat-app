@@ -12,14 +12,35 @@ import {
 import Layout from "./Layout";
 import ChatWindow from "./components/ChatWindow/ChatWindow";
 import WelcomeScreen from "./components/ChatWindow/WelcomeScreen";
+import SignIn from "./components/SignIn/SignIn";
+import SignUp from "./components/SignUp/SignUp";
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<Layout />}>
-      <Route path="room/:roomId" element={<ChatWindow />} />
-    </Route>
-  )
-);
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        path: "room/",
+        element: <ChatWindow />,
+        children: [
+          {
+            path: ":roomId",
+            element: <ChatWindow />,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    path: "/signin",
+    element: <SignIn />,
+  },
+  {
+    path: "/signup",
+    element: <SignUp />,
+  },
+]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

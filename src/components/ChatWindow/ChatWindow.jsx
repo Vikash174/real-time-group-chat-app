@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   MdKeyboardArrowDown,
   MdOutlineEmojiEmotions,
@@ -30,7 +30,7 @@ const ChatWindow = () => {
   const { roomId } = useParams();
 
   return (
-    <div className="bg-gray-900 w-screen text-white border-l border-white ">
+    <div className="bg-gray-900 text-white border-l w-[100%] border-white ">
       <div className="flex justify-between p-5 items-center border-b border-gray-400">
         <div>
           <span className="font-bold text-lg">
